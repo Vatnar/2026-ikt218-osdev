@@ -6,13 +6,13 @@
 
 # Skip compiler self-tests (saves time, avoids errors with some cross compilers)
 set(CMAKE_C_COMPILER_WORKS 1)
-set(CMAKE_CXX_COMPILER_WORKS 1)
+#set(CMAKE_CXX_COMPILER_WORKS 1)
 
 # Minimum required CMake version
 cmake_minimum_required(VERSION 3.22.1)
 
 # Project name and languages used
-project(group_42 LANGUAGES C CXX ASM_NASM)
+project(group_42 LANGUAGES C ASM_NASM)
 
 # Create a lock file to prevent parallel runs of CMake
 file(LOCK ${CMAKE_SOURCE_DIR} DIRECTORY GUARD FILE)
@@ -34,7 +34,7 @@ set(OS_KERNEL_IMAGE "kernel.iso")
 ########################################
 # Compiler Configuration
 ########################################
-set(CMAKE_CXX_STANDARD 20)
+#set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 99)
 
 ########################################
@@ -58,9 +58,16 @@ set(OS_KERNEL_LINKER "${CMAKE_CURRENT_SOURCE_DIR}/src/arch/${OS_ARCH_TARGET}/lin
 
 # Add executable target for the kernel
 add_executable(group_42-kernel 
-	src/multiboot2.asm
-    src/kernel.c
-	src/kernel.cpp
+		src/multiboot2.asm
+		src/kernel/main.c
+		src/driver/vga.c
+		src/libc/stdio.c
+		src/libc/string.c
+		src/kernel/gdt.asm
+		src/kernel/gdt.c
+		include/kernel/gdt.h
+		src/kernel/log.c
+		include/kernel/log.h
 )
 
 # Include directories for the kernel target
