@@ -75,14 +75,16 @@ void vga_putc(const char c) {
         return;
     }
     if (c == '\t') {
-        if (column >= VGA_WIDTH) {
-            vga_new_line();
+        const uint16_t tab_len = 4 - (column % 4);
+
+        for (uint16_t i = 0; i < tab_len; i++) {
+            vga_putc(' '); // For auto line wrapping
+
+            // if line gets wrapped
+            if (column == 0) break;
+
         }
-        uint16_t tab_len = 4 - (column % 4);
-        while (tab_len != 0) {
-            vga_putc(' ');
-            tab_len--;
-        }
+
         return;
     }
 
