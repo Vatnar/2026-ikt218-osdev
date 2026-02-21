@@ -9,7 +9,7 @@
 #include<libc/stdint.h>
 #include <libc/stdio.h>
 
-extern void gdt_flush(uint16_t limit, uint32_t base, uint32_t offset);
+extern void gdt_flush(uint32_t descriptor_address);
 extern void gdt_reload_segments(void);
 
 struct __attribute__((packed)) gdt_entry {
@@ -86,7 +86,7 @@ bool init_gdt(void)
                   0xCF);
 
     // Load GDTR: limit, base, offset=0
-    gdt_flush(gdt_desc.limit, gdt_desc.base, 0);
+    gdt_flush((uint32_t)&gdt_desc);
 
     // Reload segment registers (CS=0x08, DS/ES/FS/GS/SS=0x10)
     gdt_reload_segments();
