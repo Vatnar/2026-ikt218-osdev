@@ -74,3 +74,33 @@ int fprintf(FILE *__restrict__ stream, const char *__restrict__ format, ...);
  * @return number of characters written
  */
 int vfprintf ( FILE * stream, const char * format, const va_list arg );
+
+/**
+ * Busywaits until a key is pressed. Equal to fgetc(stdin)
+ * @return (int)char pressed
+ */
+int getchar();
+
+/**
+ * Sets string s, busywaits until EOF or newline is inputed
+ * @param s string to write to
+ * @param count max string length
+ * @return str if success, NULL when finished
+ */
+char* gets(char* s, int count);
+
+/**
+ * File `getchar` (fgetc)
+ * @param stream FILE to write to
+ * @return (int)char returned or 0 if fail
+ */
+int fgetc(FILE *stream);
+
+/**
+ * file `gets` (fgets), sets string s and busywaits until EOF or newline is inputed
+ * @param s string to write to
+ * @param count max string length
+ * @param stream file to write to
+ * @return str if success, NULL when finished
+ */
+char* fgets(char*s, int count, FILE* stream);

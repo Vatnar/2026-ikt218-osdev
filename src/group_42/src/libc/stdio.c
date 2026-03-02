@@ -2,6 +2,7 @@
 // Created by osdev on 2/19/26.
 //
 
+#include <driver/keyboard.h>
 #include <libc/stdio.h>
 #include <libc/string.h>
 #include <driver/vga.h>
@@ -228,4 +229,59 @@ int vfprintf ( FILE * stream, const char * format, va_list arg ) {
     }
 
     return printed;
+}
+
+
+int getchar() {
+    return fgetc(stdin);
+}
+
+char* gets(char* s, int count) {
+    return fgets(s, count, stdin);
+}
+
+int fgetc(FILE* stream) {
+    if (!stream) return EOF;
+
+    if (stream->rpos >= stream->wpos) {
+        if (stream->fd == 0) {
+            char c = 0;
+            while ((c = keyboard_pop()) == 0) {
+                __asm__ __volatile__("hlt");
+            }
+            stream->buf[0] = c;
+            stream->rpos = stream->buf;
+            stream->wpos = stream->buf + 1;
+        } else {
+            return EOF;
+        }
+    }
+    return (unsigned char)*(stream->rpos++);
+}
+
+char* fgets(char* s, int n, FILE* stream) {
+    if (n <= 0 || !s) return NULL;
+
+    int i = 0;
+    while (i < n - 1) {
+        int c = fgetc(stream);
+        if (c == EOF) break;
+
+        if (c == '\b') {
+            if (i > 0) {
+                i--;
+                vga_putc('\b');
+                vga_update_cursor();
+            }
+            continue;
+        }
+
+        vga_putc((char)c);
+        vga_update_cursor();
+        s[i++] = (char)c;
+        if (c == '\n') break;
+    }
+    if (i == 0) return NULL;
+    s[i] = '\0';
+    return s;
 }

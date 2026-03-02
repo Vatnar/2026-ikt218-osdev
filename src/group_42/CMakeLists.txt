@@ -68,6 +68,19 @@ add_executable(group_42-kernel
 		include/kernel/gdt.h
 		src/kernel/log.c
 		include/kernel/log.h
+		include/kernel/idt.h
+		src/kernel/interrupt.asm
+		src/kernel/idt.c
+		include/kernel/irq.h
+		include/kernel/isr.h
+		src/kernel/isr.c
+		include/kernel/util.h
+		src/kernel/util.c
+		src/kernel/irq.c
+		include/driver/keyboard.h
+		src/driver/keyboard.c
+		include/kernel/shell.h
+		src/kernel/shell.c
 )
 
 # Include directories for the kernel target
