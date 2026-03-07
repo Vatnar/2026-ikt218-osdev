@@ -4,8 +4,6 @@
 
 #pragma once
 
-#define MAX_COMMAND_LENGTH 256
-
 // Initializes shell and call shell_main()
 void shell_init();
 

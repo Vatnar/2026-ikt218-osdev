@@ -231,6 +231,8 @@ int vfprintf ( FILE * stream, const char * format, va_list arg ) {
     return printed;
 }
 
+// TODO: Fix std input part of stdio
+// NOTE: this used prevous version without keyboard event ap
 
 int getchar() {
     return fgetc(stdin);

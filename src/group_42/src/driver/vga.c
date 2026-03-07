@@ -36,7 +36,7 @@ uint8_t current_bg = default_bg;
  * @param c char
  * @return packed uint16_t for VGA entry [4 bits bg, 4 bits fg, 8 bits char]
  */
-static inline uint16_t vga_entry(char c) {
+static inline uint16_t vga_entry(unsigned char c) {
     return (uint16_t)c | (vga_entry_color(current_fg, current_bg) << 8);
 }
 
@@ -62,7 +62,7 @@ void vga_reset() {
     vga_clear();
 }
 
-void vga_putc(const char c) {
+void vga_putc(const unsigned char c) {
     // First handle every special line breaking character
     if (c == '\n') {
         vga_new_line();

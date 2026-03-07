@@ -56,7 +56,7 @@ void vga_scroll_line();
  * Put character to VGA display. Supports \t \n \b \r
  * @param c character
  */
-void vga_putc(char c);
+void vga_putc(unsigned char c);
 
 /**
  * Puts a string to VGA display. Uses vga_putc under the hood

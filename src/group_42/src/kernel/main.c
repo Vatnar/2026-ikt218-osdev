@@ -1,11 +1,10 @@
 #include "libc/stdint.h"
-#include <multiboot2.h>
+#include <arch/i386/multiboot2.h>
 #include <driver/keyboard.h>
 #include <driver/vga.h>
-#include <kernel/gdt.h>
-#include <kernel/idt.h>
-#include <kernel/irq.h>
-#include <kernel/isr.h>
+#include <arch/i386/gdt.h>
+#include <arch/i386/interrupt.h>
+#include <driver/keybaord_map.h>
 #include <kernel/shell.h>
 
 struct multiboot_info {
@@ -44,8 +43,23 @@ int kernel_main(uint32_t magic, struct multiboot_info* mb_info_addr) {
 
     shell_init();
 
+    vga_putc(0xED);
+    vga_puts("\x92rlig");
 
     while (1) {
+        key_event_t ev;
+        if (keyboard_get_event(&ev)) {
+            if (ev.state == KEY_PRESS) {
+                uint16_t key = keyboard_translate_no(ev);
+
+                if (key > 1 && key < 0x100 && !ev.extended)
+                    vga_putc((char)key);
+                else {
+
+                }
+                vga_update_cursor();
+            }
+        }
         __asm__ __volatile__("hlt");
     }
 }

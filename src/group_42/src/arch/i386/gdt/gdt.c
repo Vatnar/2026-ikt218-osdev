@@ -2,7 +2,7 @@
 // Created by osdev on 2/19/26.
 //
 
-#include <kernel/gdt.h>
+#include <arch/i386/gdt.h>
 #include <kernel/log.h>
 
 #include <libc/stdbool.h>

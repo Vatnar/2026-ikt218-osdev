@@ -2,15 +2,17 @@
 // Created by osdev on 2/28/26.
 //
 
-#include <kernel/idt.h>
-#include <kernel/isr.h>
+#include <arch/i386/interrupt.h>
 #include <kernel/log.h>
 #include <kernel/util.h>
 
 isr_t interrupt_handlers[256];
 
+extern void* isr_stub_table[32];
+
+
 /* To print the message which defines every exception */
-char *exception_messages[] = {
+static char *exception_messages[] = {
     "Division By Zero",
     "Debug",
     "Non Maskable Interrupt",

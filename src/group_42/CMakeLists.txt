@@ -57,34 +57,36 @@ set(CMAKE_ASM_NASM_COMPILE_OBJECT
 set(OS_KERNEL_LINKER "${CMAKE_CURRENT_SOURCE_DIR}/src/arch/${OS_ARCH_TARGET}/linker.ld")
 
 # Add executable target for the kernel
-add_executable(group_42-kernel 
-		src/multiboot2.asm
+add_executable(group_42-kernel
+        src/arch/i386/boot/multiboot2.asm
 		src/kernel/main.c
 		src/driver/vga.c
 		src/libc/stdio.c
 		src/libc/string.c
-		src/kernel/gdt.asm
-		src/kernel/gdt.c
-		include/kernel/gdt.h
+		src/arch/i386/gdt/gdt.asm
+		src/arch/i386/gdt/gdt.c
+		include/arch/i386/gdt.h
 		src/kernel/log.c
 		include/kernel/log.h
-		include/kernel/idt.h
-		src/kernel/interrupt.asm
-		src/kernel/idt.c
-		include/kernel/irq.h
-		include/kernel/isr.h
-		src/kernel/isr.c
+        src/arch/i386/interrupt/interrupt.asm
+		src/arch/i386/interrupt/idt.c
+        src/arch/i386/interrupt/isr.c
 		include/kernel/util.h
 		src/kernel/util.c
-		src/kernel/irq.c
+        src/arch/i386/interrupt/irq.c
 		include/driver/keyboard.h
 		src/driver/keyboard.c
 		include/kernel/shell.h
 		src/kernel/shell.c
+		include/arch/i386/interrupt.h
+		src/kernel/util/ringbuffer.c
+		include/kernel/util/ringbuffer.h
+		include/driver/keybaord_map.h
+		src/driver/keyboard_map.c
 )
 
 # Include directories for the kernel target
-target_include_directories(group_42-kernel PUBLIC include)
+target_include_directories(group_42-kernel PUBLIC include include/libc)
 
 
 # Specify compile options for C and C++

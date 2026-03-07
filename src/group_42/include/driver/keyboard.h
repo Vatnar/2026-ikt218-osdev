@@ -4,28 +4,32 @@
 
 #pragma once
 #include <kernel/util.h>
+#include <libc/stdbool.h>
+#include <libc/stdint.h>
 
-#define KEYBOARD_BUFFER_SIZE 256
+typedef enum {
+    KEY_PRESS,
+    KEY_RELEASE,
+} key_state_t;
+
+typedef struct {
+    uint16_t scancode;
+    key_state_t state;
+    bool shift;
+    bool control;
+    bool alt;
+    bool caps;
+    bool extended;
+} key_event_t;
 
 // Initialize keyboard with IRQ0
 void init_keyboard();
 
 /**
- * Handles keyboard presses, called for each keybooard interrupt.
- * @param regs registers pushed by IRS/IRQ handler
+ * Get keyboard event.
+ *
+ * Note: missing alt_gr, dead- and compose key.
+ * @param event event stored, reference
+ * @return true if event exists, false for no events
  */
-void keyboard_callback(registers_t *regs);
-
-/**
- * Push character to keyboard buffer
- * @param c char
- */
-void keyboard_push(char c);
-
-/**
- * Get last keyboard character pressed
- * @return 0 if empty or character
- */
-char keyboard_pop();
-
-
+bool keyboard_get_event(key_event_t* event);
