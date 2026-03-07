@@ -81,7 +81,7 @@ add_executable(group_42-kernel
 		include/arch/i386/interrupt.h
 		src/kernel/util/ringbuffer.c
 		include/kernel/util/ringbuffer.h
-		include/driver/keybaord_map.h
+		include/driver/keyboard_map.h
 		src/driver/keyboard_map.c
 )
 

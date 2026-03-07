@@ -2,7 +2,7 @@
 // Created by osdev on 3/1/26.
 //
 
-#include <driver/keybaord_map.h>
+#include <driver/keyboard_map.h>
 #include <driver/keyboard.h>
 #include <driver/vga.h>
 #include <kernel/log.h>

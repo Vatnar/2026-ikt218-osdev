@@ -2,7 +2,7 @@
 // Created by osdev on 3/7/26.
 //
 
-#include <driver/keybaord_map.h>
+#include <driver/keyboard_map.h>
 
 // CP437 / VGA Hardware character mappings for Norwegian vowels
 #define CP437_ae_LOWER 0x91  // æ

@@ -4,7 +4,7 @@
 #include <driver/vga.h>
 #include <arch/i386/gdt.h>
 #include <arch/i386/interrupt.h>
-#include <driver/keybaord_map.h>
+#include <driver/keyboard_map.h>
 #include <kernel/shell.h>
 
 struct multiboot_info {
