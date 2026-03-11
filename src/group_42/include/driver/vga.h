@@ -80,3 +80,10 @@ void vga_cursor_position(uint8_t x, uint8_t y);
 
 // Sets cursor to current row and column
 void vga_update_cursor();
+
+/**
+ * Get current cursor position directly from VGA buffer, not internal row and column
+ * @param x reference to save row
+ * @param y reference to save column
+ */
+void get_cursor_position(uint16_t *x, uint16_t *y);
