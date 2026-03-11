@@ -3,6 +3,7 @@
 //
 
 #pragma once
+#include <libc/stdint.h>
 
 enum vga_color {
     VGA_COLOR_BLACK = 0,
@@ -39,6 +40,15 @@ void vga_reset();
 // Makes new characters appear on a new line
 void vga_new_line();
 
+// Clears current line
+void vga_clear_line();
+
+/**
+ * Clears line then puts string using puts
+ * @param s string to print
+ */
+void vga_set_line(const char *s);
+
 // Scroll everything up 1 line
 void vga_scroll_line();
 
@@ -46,7 +56,7 @@ void vga_scroll_line();
  * Put character to VGA display. Supports \t \n \b \r
  * @param c character
  */
-void vga_putc(char c);
+void vga_putc(unsigned char c);
 
 /**
  * Puts a string to VGA display. Uses vga_putc under the hood
@@ -60,3 +70,13 @@ void vga_puts(const char *s);
  * @param bg background color
  */
 void vga_set_color(enum vga_color fg, enum vga_color bg);
+
+/**
+ * Sets cursor position
+ * @param x position, column
+ * @param y position, row
+ */
+void vga_cursor_position(uint8_t x, uint8_t y);
+
+// Sets cursor to current row and column
+void vga_update_cursor();

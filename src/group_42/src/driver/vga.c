@@ -5,10 +5,14 @@
 #include "libc/stdint.h"
 #include "driver/vga.h"
 
+#include <kernel/log.h>
+#include <kernel/util.h>
+
 // Global variables
 
 uint16_t column = 0;
 uint16_t row = 0;
+uint16_t start_of_line = 0; // row where line starts, before line wrap
 uint16_t* const vga_ptr = (uint16_t* const) VGA_MEMORY;
 
 /**
@@ -32,7 +36,7 @@ uint8_t current_bg = default_bg;
  * @param c char
  * @return packed uint16_t for VGA entry [4 bits bg, 4 bits fg, 8 bits char]
  */
-static inline uint16_t vga_entry(char c) {
+static inline uint16_t vga_entry(unsigned char c) {
     return (uint16_t)c | (vga_entry_color(current_fg, current_bg) << 8);
 }
 
@@ -43,6 +47,7 @@ void vga_init() {
 void vga_clear() {
     row = 0;
     column = 0;
+    start_of_line = 0;
     // Clear every "pixel"
     for (size_t y = 0; y < VGA_HEIGHT; y++) {
         for (size_t x = 0; x < VGA_WIDTH; x++) {
@@ -57,7 +62,7 @@ void vga_reset() {
     vga_clear();
 }
 
-void vga_putc(const char c) {
+void vga_putc(const unsigned char c) {
     // First handle every special line breaking character
     if (c == '\n') {
         vga_new_line();
@@ -65,10 +70,20 @@ void vga_putc(const char c) {
     }
     if (c == '\r') {
         column = 0;
+        row = start_of_line; // because of smart line wrap
         return;
     }
-    if (c == '\b' && column != 0) {
-        // "backspace" clear current pixel and move to prevous
+    if (c == '\b') {
+        // "backspace" clear current pixel and move to previous
+        if ((column == 0) && (row == start_of_line))
+            return; // do nothing
+
+        if (column == 0) { // go to and erase prevous row last column
+            row--;
+            column = VGA_WIDTH - 1;
+            vga_ptr[row * VGA_WIDTH + column] = vga_entry(' ');
+            return;
+        }
         column--;
         vga_putc(' ');
         column--;
@@ -92,7 +107,11 @@ void vga_putc(const char c) {
     vga_ptr[row * VGA_WIDTH + column] = vga_entry(c);
     column++;
     if (column >= VGA_WIDTH) {  // line wrap
-        vga_new_line();         // new line auto scrolls if needed
+        column = 0;
+        row++;
+    }
+    if (row >= VGA_HEIGHT) {
+        vga_scroll_line();
     }
 }
 
@@ -108,21 +127,36 @@ void vga_puts(const char *cp) {
 void vga_new_line() {
     row++;
     column = 0;
+    start_of_line = row;
     // scroll if needed
     if (row >= VGA_HEIGHT) {
         vga_scroll_line();
     }
 }
 
+void vga_clear_line() {
+    while (column != 0 && row != start_of_line) {
+        vga_putc('\b');
+    }
+}
+
+void vga_set_line(const char *s) {
+    vga_clear_line();
+    vga_puts(s);
+}
+
 void vga_scroll_line() {
     // move every character 1 row upwards
-    for (uint16_t y = 0; y < VGA_HEIGHT; y++) {
+    for (uint16_t y = 1; y < VGA_HEIGHT; y++) {
         for (uint16_t x = 0; x < VGA_WIDTH; x++) {
             vga_ptr[(y-1) * VGA_WIDTH + x] = vga_ptr[(y) * VGA_WIDTH + x];
         }
     }
     row-=1;
-    // clear last screen
+    if (start_of_line != 0)
+        start_of_line--;
+
+    // clear last column
     for (uint16_t x = 0; x < VGA_WIDTH; x++) {
         vga_ptr[(VGA_HEIGHT - 1) * VGA_WIDTH + x] = vga_entry(' ');
     }
@@ -132,4 +166,18 @@ void vga_scroll_line() {
 void vga_set_color(const enum vga_color fg, const enum vga_color bg) {
     current_fg = fg;
     current_bg = bg;
+}
+
+void vga_cursor_position(uint8_t x, uint8_t y) {
+    uint16_t pos = y * VGA_WIDTH + x;
+
+    port_byte_out(0x3D4, 0x0F);
+    port_byte_out(0x3D5, (uint8_t) (pos & 0xFF));
+    port_byte_out(0x3D4, 0x0E);
+    port_byte_out(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
+}
+
+// Sets cursor to current row and column
+void vga_update_cursor() {
+    vga_cursor_position(column, row);
 }
