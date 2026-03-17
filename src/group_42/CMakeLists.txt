@@ -83,6 +83,14 @@ add_executable(group_42-kernel
 		include/kernel/util/ringbuffer.h
 		include/driver/keyboard_map.h
 		src/driver/keyboard_map.c
+		include/kernel/memory.h
+		src/kernel/memory.c
+		include/driver/PCSPK.h
+		src/driver/PCSPK.c
+		include/kernel/pit.h
+		src/kernel/pit.c
+        src/program/keylogger.c
+		include/program/keylogger.h
 )
 
 # Include directories for the kernel target

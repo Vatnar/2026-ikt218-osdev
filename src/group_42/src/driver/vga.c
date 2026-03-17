@@ -83,19 +83,16 @@ void vga_putc(const unsigned char c) {
         return;
     }
     if (c == '\b') {
-        // "backspace" clear current pixel and move to previous
-        if ((column == 0) && (row == start_of_line))
-            return; // do nothing
+        if (column == 0 && row == start_of_line) return;
 
-        if (column == 0) { // go to and erase prevous row last column
+        if (column == 0) {
             row--;
             column = VGA_WIDTH - 1;
-            vga_ptr[row * VGA_WIDTH + column] = vga_entry(' ');
-            return;
+        } else {
+            column--;
         }
-        column--;
-        vga_putc(' ');
-        column--;
+        // Direct memory write to avoid the column++ inside vga_putc(' ')
+        vga_ptr[row * VGA_WIDTH + column] = vga_entry(' ');
         return;
     }
     if (c == '\t') {
@@ -144,7 +141,7 @@ void vga_new_line() {
 }
 
 void vga_clear_line() {
-    while (column != 0 && row != start_of_line) {
+    while (!(column == 0 && row == start_of_line)) {
         vga_putc('\b');
     }
 }

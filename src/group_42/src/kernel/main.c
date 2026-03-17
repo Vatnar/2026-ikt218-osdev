@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <string.h>
+
 #include "libc/stdint.h"
 #include <arch/i386/multiboot2.h>
 #include <driver/keyboard.h>
@@ -5,6 +8,10 @@
 #include <arch/i386/gdt.h>
 #include <arch/i386/interrupt.h>
 #include <driver/keyboard_map.h>
+#include <driver/PCSPK.h>
+#include <kernel/log.h>
+#include <kernel/memory.h>
+#include <kernel/pit.h>
 #include <kernel/shell.h>
 
 struct multiboot_info {
@@ -13,9 +20,9 @@ struct multiboot_info {
     struct multiboot_tag *first;
 };
 
-void void_function(){}
+extern uint32_t end; // This is defined in arch/i386/linker.ld
 
-int kernel_main(uint32_t magic, struct multiboot_info* mb_info_addr) {
+void kernel_main(uint32_t magic, struct multiboot_info* mb_info_addr) {
     vga_init();
     vga_new_line();
 
@@ -23,43 +30,57 @@ int kernel_main(uint32_t magic, struct multiboot_info* mb_info_addr) {
     init_idt();
     init_isr();
     init_irq();
+    init_pit();
+    PCSPK_init();
     init_keyboard();
+    init_mm(&end);
+    init_paging();
+    KERNEL_LOG("Memory layout before malloc.\n");
+    print_memory_layout();
+
+    int* array = (int*)alloc_page();
+    if (!array) {
+        KERNEL_LOG_ERROR("Malloc failed!");
+        __asm__ volatile("cli; hlt");
+    }
+
+    memset(array, 'a', sizeof(int) * 100);
+
+    for (size_t i = 0; i < 100; i++) {
+        printf("%c ", array[i]);
+    }
+
+    putchar('\n');
+    KERNEL_LOG_INFO("Memory layout after malloc.\n");
+    print_memory_layout();
+
+    free_page(array);
+    KERNEL_LOG_INFO("Memory layout after free.\n");
+    print_memory_layout();
+
     vga_puts("Hello world from MyrstadOS\n");
 
-    // Register empty interrupt handlers so th
-    register_irq_routine(0, void_function);
-    register_interrupt_handler(0, void_function);
-    register_interrupt_handler(1, void_function);
-    register_interrupt_handler(2, void_function);
 
     // Enable interrupts, and send interrupts 0,1,2
     __asm__ volatile("sti");
-    __asm__ volatile("int $0");
-    __asm__ volatile("int $1");
-    __asm__ volatile("int $2");
-    // __asm__ volatile("int $8");
 
-    vga_update_cursor();
+    PCSPK_play(262);
+    sleep_busy(500);
+
+    PCSPK_play(329);
+    sleep_interrupt(500);
+
+    PCSPK_play(392);
+    sleep_interrupt(500);
+    PCSPK_stop();
 
     shell_init();
 
-    vga_putc(0xED);
-    vga_puts("\x92rlig");
-
     while (1) {
-        key_event_t ev;
-        if (keyboard_get_event(&ev)) {
-            if (ev.state == KEY_PRESS) {
-                uint16_t key = keyboard_translate_no(ev);
-
-                if (key > 1 && key < 0x100 && !ev.extended)
-                    vga_putc((char)key);
-                else {
-
-                }
-                vga_update_cursor();
-            }
-        }
+        // Traps the kernel in case shell crashes
+        vga_set_color(VGA_COLOR_LIGHT_RED, VGA_COLOR_WHITE);
+        vga_set_line("TODO: shutdown system instead");
+        vga_update_cursor();
         __asm__ __volatile__("hlt");
     }
 }
