@@ -79,6 +79,7 @@ void irq_handler(registers_t *r) {
 
     // Handle IRQ using callback already set
     if (irq_routines[irq_num] != 0) {
+        // KERNEL_LOG("running irq %d\n", irq_num);
         irq_routines[irq_num](r);
     } else {
         // note: do not hang the system, IRQs are not as critical as ISRs 0 though 31

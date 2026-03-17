@@ -20,3 +20,17 @@ size_t strcmp(const char *str1, const char *str2) {
     // Returns difference of str1 and str2, 0 ufif equal
     return *(unsigned char *)str1 - *(unsigned char *)str2;
 }
+
+char* strcpy(char* dest, const char* src) {
+    char* saved = dest;
+    while ((*dest++ = *src++)){}
+    return saved;
+}
+
+void* memset(void* dest, int ch, size_t count) {
+    unsigned char* ptr = (unsigned char*)dest;
+    while (count--) {
+        *ptr++ = (unsigned char)ch;
+    }
+    return dest;
+}

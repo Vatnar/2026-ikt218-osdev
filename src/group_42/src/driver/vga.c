@@ -8,6 +8,15 @@
 #include <kernel/log.h>
 #include <kernel/util.h>
 
+// definitions
+/* VGA Control Ports */
+#define VGA_CTRL_REGISTER 0x3D4
+#define VGA_DATA_REGISTER 0x3D5
+
+/* VGA CRTC Register Indices */
+#define VGA_OFFSET_LOW  0x0F
+#define VGA_OFFSET_HIGH 0x0E
+
 // Global variables
 
 uint16_t column = 0;
@@ -74,19 +83,16 @@ void vga_putc(const unsigned char c) {
         return;
     }
     if (c == '\b') {
-        // "backspace" clear current pixel and move to previous
-        if ((column == 0) && (row == start_of_line))
-            return; // do nothing
+        if (column == 0 && row == start_of_line) return;
 
-        if (column == 0) { // go to and erase prevous row last column
+        if (column == 0) {
             row--;
             column = VGA_WIDTH - 1;
-            vga_ptr[row * VGA_WIDTH + column] = vga_entry(' ');
-            return;
+        } else {
+            column--;
         }
-        column--;
-        vga_putc(' ');
-        column--;
+        // Direct memory write to avoid the column++ inside vga_putc(' ')
+        vga_ptr[row * VGA_WIDTH + column] = vga_entry(' ');
         return;
     }
     if (c == '\t') {
@@ -135,7 +141,7 @@ void vga_new_line() {
 }
 
 void vga_clear_line() {
-    while (column != 0 && row != start_of_line) {
+    while (!(column == 0 && row == start_of_line)) {
         vga_putc('\b');
     }
 }
@@ -169,15 +175,36 @@ void vga_set_color(const enum vga_color fg, const enum vga_color bg) {
 }
 
 void vga_cursor_position(uint8_t x, uint8_t y) {
+    // Calculate the linear offset in video memory
     uint16_t pos = y * VGA_WIDTH + x;
 
-    port_byte_out(0x3D4, 0x0F);
-    port_byte_out(0x3D5, (uint8_t) (pos & 0xFF));
-    port_byte_out(0x3D4, 0x0E);
-    port_byte_out(0x3D5, (uint8_t) ((pos >> 8) & 0xFF));
+    // Send the low byte of the cursor position
+    port_byte_out(VGA_CTRL_REGISTER, VGA_OFFSET_LOW);
+    port_byte_out(VGA_DATA_REGISTER, (uint8_t) (pos & 0xFF));
+
+    // Send the high byte of the cursor position
+    port_byte_out(VGA_CTRL_REGISTER, VGA_OFFSET_HIGH);
+    port_byte_out(VGA_DATA_REGISTER, (uint8_t) ((pos >> 8) & 0xFF));
 }
 
 // Sets cursor to current row and column
 void vga_update_cursor() {
     vga_cursor_position(column, row);
+}
+
+void get_cursor_position(uint16_t *x, uint16_t *y)
+{
+    uint16_t pos = 0;
+
+    // Read the low byte
+    port_byte_out(VGA_CTRL_REGISTER, VGA_OFFSET_LOW);
+    pos |= port_byte_in(VGA_DATA_REGISTER);
+
+    // Read the high byte and shift it into the top 8 bits
+    port_byte_out(VGA_CTRL_REGISTER, VGA_OFFSET_HIGH);
+    pos |= ((uint16_t)port_byte_in(VGA_DATA_REGISTER)) << 8;
+
+    // Deconstruct linear position back into 2D coordinates
+    *x = pos % VGA_WIDTH;
+    *y = pos / VGA_WIDTH;
 }

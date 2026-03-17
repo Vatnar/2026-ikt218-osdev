@@ -8,7 +8,7 @@
 #define CP437_ae_LOWER 0x91  // æ
 #define CP437_ae_UPPER 0x92  // Æ
 #define CP437_oo_LOWER 0xED  // ø (Technically 'phi', but used for ø)
-#define CP437_oo_UPPER 0x99  // Ø (Technically Ö, but often mapped)
+#define CP437_oo_UPPER 0x99  // Ø (Technically Ö, but used for Ø)
 #define CP437_aa_LOWER 0x86  // å
 #define CP437_aa_UPPER 0x8F  // Å
 
