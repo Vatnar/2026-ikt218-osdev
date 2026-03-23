@@ -7,7 +7,7 @@
 #include <driver/keyboard_map.h>
 #include <driver/vga.h>
 
-void keylogger(int argc, char** argv) {
+int keylogger(int argc, char** argv) {
     (void)argc;
     (void)argv;
     printf("Keyboard logger started. Type and press Enter; ESC or Ctrl+C exits.\n");

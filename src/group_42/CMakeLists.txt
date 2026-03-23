@@ -91,6 +91,9 @@ add_executable(group_42-kernel
 		src/kernel/pit.c
         src/program/keylogger.c
 		include/program/keylogger.h
+		include/program/frequencies.h
+		include/program/musicplayer.h
+		src/program/musicplayer.c
 )
 
 # Include directories for the kernel target

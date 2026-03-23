@@ -64,16 +64,6 @@ void kernel_main(uint32_t magic, struct multiboot_info* mb_info_addr) {
     // Enable interrupts, and send interrupts 0,1,2
     __asm__ volatile("sti");
 
-    PCSPK_play(262);
-    sleep_busy(500);
-
-    PCSPK_play(329);
-    sleep_interrupt(500);
-
-    PCSPK_play(392);
-    sleep_interrupt(500);
-    PCSPK_stop();
-
     shell_init();
 
     while (1) {

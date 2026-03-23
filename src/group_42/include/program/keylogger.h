@@ -8,5 +8,6 @@
  * Simple programs that scans for keyboard events and displays every keyboard key inputted.
  * @param argc void; for c style
  * @param argv void; for c style
+ * @return int; program return 0 on success else error code
  */
-void keylogger(int argc, char** argv);
+int keylogger(int argc, char** argv);

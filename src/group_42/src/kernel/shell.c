@@ -9,9 +9,14 @@
 #include <program/keylogger.h>
 #include <libc/stdio.h>
 #include <libc/string.h>
+#include <program/musicplayer.h>
 
 #define MAX_COMMAND_LENGTH 256
 #define HISTORY_LENGTH 16
+
+#define MAX_ARGS 16
+#define MAX_ARG_LEN 64
+
 
 static char* shell_prefix = " MyrstadOS> ";
 
@@ -23,6 +28,8 @@ static char history[HISTORY_LENGTH][MAX_COMMAND_LENGTH];
 static int  history_count = 0;
 static int  history_view_index = -1;
 
+static char argv_static[MAX_ARGS][MAX_ARG_LEN];
+static char* argv_ptrs[MAX_ARGS];
 
 /* Private Cursor Helpers */
 static void shell_move_cursor(int delta_x) {
@@ -160,23 +167,78 @@ void shell_main() {
     }
 }
 
-void shell_execute(char* command) {
-    if (strlen(command) == 0) return;
+/**
+ * Parse arguments to fixed (static) arguments in file.
+ * @param line string to be parsed
+ * @param argc_out reference to arg count
+ * @return 0 on succes or error code
+ */
+static int parse_args_fixed(const char* line, int* argc_out) {
 
-    if (strcmp(command, "clear") == 0) {
+
+    *argc_out = 0;
+    if (!line || !*line)
+        return -1;
+
+    const char* p = line;
+    int argi = 0;
+    int arglength = 0;
+
+    while (*p && argi < MAX_ARGS) {
+        while (*p == ' ' || *p == '\t')
+            p++;
+        if (!*p)
+            break;
+
+        char* dest = argv_static[argi];
+        argv_ptrs[argi] = dest;
+        while (*p && *p != ' ' && *p != '\t' && arglength < MAX_ARG_LEN - 1) {
+            *dest++ = *p++;
+            arglength++;
+        }
+        *dest = '\0';
+        arglength = 0;
+
+        argi++;
+        if (*p)
+            p++;
+    }
+
+    *argc_out = argi;
+    return (argi == 0 || argi >= MAX_ARGS) ? -1 : 0;
+}
+
+void shell_execute(char* command) {
+    int argc = 0;
+    if (!command || !*command) {
+        return;
+    }
+
+    if (parse_args_fixed(command, &argc) != 0) {
+        printf("Parse error (max %d args)\n", MAX_ARGS);
+        return;
+    }
+
+    if (strcmp(argv_ptrs[0], "clear") == 0) {
         vga_clear();
         return;
     }
-    if (strcmp(command, "cls") == 0) {
+    if (strcmp(argv_ptrs[0], "cls") == 0) {
         vga_clear();
         return;
     }
-    if (strcmp(command, "help") == 0) {
+    if (strcmp(argv_ptrs[0], "help") == 0) {
         printf("All valid functions and commands are:\n\tclear/cls - clear the screen\n\tkeylogger - show all keystrokes\n\thelp - show all commands\n");
         return;
     }
-    if (strcmp(command, "keylogger") == 0) {
+    if (strcmp(argv_ptrs[0], "keylogger") == 0) {
         keylogger(0, 0);
+        return;
+    }
+    if (strcmp(argv_ptrs[0], "music_player") == 0) {
+
+        parse_args_fixed(command, &argc);
+        music_player(argc, argv_ptrs);
         return;
     }
 
