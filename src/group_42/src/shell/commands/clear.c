@@ -1,5 +1,3 @@
-#include "shell/commands/clear.h"
-
 #include "drivers/video/vga_text.h"
 
 int cmd_clear(int argc, char** argv) {

@@ -1,5 +1,3 @@
-#include "shell/commands/echo.h"
-
 #include <stdio.h>
 
 int cmd_echo(int argc, char** argv) {

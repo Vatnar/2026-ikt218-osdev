@@ -1,25 +1,25 @@
 #include "shell/shell.h"
 
-#include <arch/i386/cpu/ports.h>
 #include <kernel/input.h>
-#include <stddef.h>
 #include <stdio.h>
-#include <string.h>
 
 #include "drivers/input/keyboard.h"
 #include "drivers/video/vga_text.h"
-#include "kernel/util.h"
-#include "shell/commands/clear.h"
-#include "shell/commands/echo.h"
-#include "shell/commands/help.h"
-#include "shell/commands/keyboard_logger.h"
-#include "shell/commands/music_player.h"
-#include "shell/commands/print_memory.h"
-#include "shell/commands/timer_test.h"
 #include "shell/shell_command.h"
-#include "shell/commands/loadkeys.h"
 
-int cmd_test_syscalls(int argc, char** argv);
+
+// NOTE: We just declare the commands here, since they are only used in this file.
+//       And there is no reason to pollute the global namespace
+extern int cmd_help(int argc, char** argv);
+extern int cmd_clear(int argc, char** argv);
+extern int cmd_echo(int argc, char** argv);
+extern int cmd_keyboard_logger(int argc, char** argv);
+extern int cmd_print_memory(int argc, char** argv);
+extern int cmd_timer_test(int argc, char** argv);
+extern int cmd_music_player(int argc, char** argv);
+extern int cmd_test_syscalls(int argc, char** argv);
+extern int cmd_loadkeys(int argc, char** argv);
+
 
 #define SHELL_BUFFER_SIZE 256
 #define HISTORY_SIZE 10
@@ -48,8 +48,8 @@ const shell_command_t command_table[] = {
     {   "print_memory",       "Print current memory layout",    cmd_print_memory},
     {     "timer_test",               "Run timer test IRQ0",      cmd_timer_test},
     {   "music_player", "Play a song (music_player <song>)",    cmd_music_player},
-    {  "test_syscalls",           "Test syscall handlers directly",    cmd_test_syscalls},
-  {         "loadkeys",         "Load keys locale [no, us]",       cmd_loadkeys}
+    {  "test_syscalls",    "Test syscall handlers directly",   cmd_test_syscalls},
+    {       "loadkeys",         "Load keys locale [no, us]",        cmd_loadkeys}
 };
 const size_t NUM_COMMANDS = sizeof(command_table) / sizeof(command_table[0]);
 
@@ -135,7 +135,7 @@ static void history_up(void) {
   }
   for (size_t j = 0; j < SHELL_BUFFER_SIZE; j++) {
     cmd_buffer[j] = history[history_idx][j];
-    if (cmd_buffer[j] == '\0' && j < SHELL_BUFFER_SIZE) {
+    if (cmd_buffer[j] == '\0') {
       for (size_t k = j; k < SHELL_BUFFER_SIZE; k++) {
         cmd_buffer[k] = '\0';
       }
@@ -298,7 +298,7 @@ void shell_run(void) {
       } else if (c == '\b') {
         buffer_delete();
       } else if (c >= 32 && c <= 126) {
-        buffer_insert(c);
+        buffer_insert((char)c);
       }
 
       render_line();

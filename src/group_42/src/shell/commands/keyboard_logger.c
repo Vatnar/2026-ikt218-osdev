@@ -1,5 +1,3 @@
-#include "shell/commands/keyboard_logger.h"
-
 #include <drivers/input/keyboard.h>
 #include <stdint.h>
 #include <stdio.h>

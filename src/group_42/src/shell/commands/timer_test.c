@@ -1,5 +1,3 @@
-#include "shell/commands/timer_test.h"
-
 #include <drivers/input/keyboard.h>
 #include <kernel/pit.h>
 #include <kernel/util.h>

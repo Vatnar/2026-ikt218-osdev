@@ -1,6 +1,5 @@
-#include "shell/commands/help.h"
-
 #include <stdio.h>
+
 #include "shell/shell_command.h"
 
 int cmd_help(int argc, char** argv) {
