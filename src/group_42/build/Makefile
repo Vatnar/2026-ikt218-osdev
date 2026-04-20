@@ -472,6 +472,54 @@ src/drivers/video/vga_terminal.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/drivers/video/vga_terminal.c.s
 .PHONY : src/drivers/video/vga_terminal.c.s
 
+src/kernel/filesystem/ramfs.o: src/kernel/filesystem/ramfs.c.o
+.PHONY : src/kernel/filesystem/ramfs.o
+
+# target to build an object file
+src/kernel/filesystem/ramfs.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/kernel/filesystem/ramfs.c.o
+.PHONY : src/kernel/filesystem/ramfs.c.o
+
+src/kernel/filesystem/ramfs.i: src/kernel/filesystem/ramfs.c.i
+.PHONY : src/kernel/filesystem/ramfs.i
+
+# target to preprocess a source file
+src/kernel/filesystem/ramfs.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/kernel/filesystem/ramfs.c.i
+.PHONY : src/kernel/filesystem/ramfs.c.i
+
+src/kernel/filesystem/ramfs.s: src/kernel/filesystem/ramfs.c.s
+.PHONY : src/kernel/filesystem/ramfs.s
+
+# target to generate assembly for a file
+src/kernel/filesystem/ramfs.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/kernel/filesystem/ramfs.c.s
+.PHONY : src/kernel/filesystem/ramfs.c.s
+
+src/kernel/filesystem/vfs.o: src/kernel/filesystem/vfs.c.o
+.PHONY : src/kernel/filesystem/vfs.o
+
+# target to build an object file
+src/kernel/filesystem/vfs.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/kernel/filesystem/vfs.c.o
+.PHONY : src/kernel/filesystem/vfs.c.o
+
+src/kernel/filesystem/vfs.i: src/kernel/filesystem/vfs.c.i
+.PHONY : src/kernel/filesystem/vfs.i
+
+# target to preprocess a source file
+src/kernel/filesystem/vfs.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/kernel/filesystem/vfs.c.i
+.PHONY : src/kernel/filesystem/vfs.c.i
+
+src/kernel/filesystem/vfs.s: src/kernel/filesystem/vfs.c.s
+.PHONY : src/kernel/filesystem/vfs.s
+
+# target to generate assembly for a file
+src/kernel/filesystem/vfs.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/kernel/filesystem/vfs.c.s
+.PHONY : src/kernel/filesystem/vfs.c.s
+
 src/kernel/log.o: src/kernel/log.c.o
 .PHONY : src/kernel/log.o
 
@@ -856,6 +904,54 @@ src/libc/string.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/libc/string.c.s
 .PHONY : src/libc/string.c.s
 
+src/shell/commands/cat.o: src/shell/commands/cat.c.o
+.PHONY : src/shell/commands/cat.o
+
+# target to build an object file
+src/shell/commands/cat.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/cat.c.o
+.PHONY : src/shell/commands/cat.c.o
+
+src/shell/commands/cat.i: src/shell/commands/cat.c.i
+.PHONY : src/shell/commands/cat.i
+
+# target to preprocess a source file
+src/shell/commands/cat.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/cat.c.i
+.PHONY : src/shell/commands/cat.c.i
+
+src/shell/commands/cat.s: src/shell/commands/cat.c.s
+.PHONY : src/shell/commands/cat.s
+
+# target to generate assembly for a file
+src/shell/commands/cat.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/cat.c.s
+.PHONY : src/shell/commands/cat.c.s
+
+src/shell/commands/cd.o: src/shell/commands/cd.c.o
+.PHONY : src/shell/commands/cd.o
+
+# target to build an object file
+src/shell/commands/cd.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/cd.c.o
+.PHONY : src/shell/commands/cd.c.o
+
+src/shell/commands/cd.i: src/shell/commands/cd.c.i
+.PHONY : src/shell/commands/cd.i
+
+# target to preprocess a source file
+src/shell/commands/cd.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/cd.c.i
+.PHONY : src/shell/commands/cd.c.i
+
+src/shell/commands/cd.s: src/shell/commands/cd.c.s
+.PHONY : src/shell/commands/cd.s
+
+# target to generate assembly for a file
+src/shell/commands/cd.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/cd.c.s
+.PHONY : src/shell/commands/cd.c.s
+
 src/shell/commands/clear.o: src/shell/commands/clear.c.o
 .PHONY : src/shell/commands/clear.o
 
@@ -976,6 +1072,54 @@ src/shell/commands/loadkeys.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/loadkeys.c.s
 .PHONY : src/shell/commands/loadkeys.c.s
 
+src/shell/commands/ls.o: src/shell/commands/ls.c.o
+.PHONY : src/shell/commands/ls.o
+
+# target to build an object file
+src/shell/commands/ls.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/ls.c.o
+.PHONY : src/shell/commands/ls.c.o
+
+src/shell/commands/ls.i: src/shell/commands/ls.c.i
+.PHONY : src/shell/commands/ls.i
+
+# target to preprocess a source file
+src/shell/commands/ls.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/ls.c.i
+.PHONY : src/shell/commands/ls.c.i
+
+src/shell/commands/ls.s: src/shell/commands/ls.c.s
+.PHONY : src/shell/commands/ls.s
+
+# target to generate assembly for a file
+src/shell/commands/ls.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/ls.c.s
+.PHONY : src/shell/commands/ls.c.s
+
+src/shell/commands/mkdir.o: src/shell/commands/mkdir.c.o
+.PHONY : src/shell/commands/mkdir.o
+
+# target to build an object file
+src/shell/commands/mkdir.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/mkdir.c.o
+.PHONY : src/shell/commands/mkdir.c.o
+
+src/shell/commands/mkdir.i: src/shell/commands/mkdir.c.i
+.PHONY : src/shell/commands/mkdir.i
+
+# target to preprocess a source file
+src/shell/commands/mkdir.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/mkdir.c.i
+.PHONY : src/shell/commands/mkdir.c.i
+
+src/shell/commands/mkdir.s: src/shell/commands/mkdir.c.s
+.PHONY : src/shell/commands/mkdir.s
+
+# target to generate assembly for a file
+src/shell/commands/mkdir.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/mkdir.c.s
+.PHONY : src/shell/commands/mkdir.c.s
+
 src/shell/commands/music_player.o: src/shell/commands/music_player.c.o
 .PHONY : src/shell/commands/music_player.o
 
@@ -1023,6 +1167,30 @@ src/shell/commands/print_memory.s: src/shell/commands/print_memory.c.s
 src/shell/commands/print_memory.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/print_memory.c.s
 .PHONY : src/shell/commands/print_memory.c.s
+
+src/shell/commands/pwd.o: src/shell/commands/pwd.c.o
+.PHONY : src/shell/commands/pwd.o
+
+# target to build an object file
+src/shell/commands/pwd.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/pwd.c.o
+.PHONY : src/shell/commands/pwd.c.o
+
+src/shell/commands/pwd.i: src/shell/commands/pwd.c.i
+.PHONY : src/shell/commands/pwd.i
+
+# target to preprocess a source file
+src/shell/commands/pwd.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/pwd.c.i
+.PHONY : src/shell/commands/pwd.c.i
+
+src/shell/commands/pwd.s: src/shell/commands/pwd.c.s
+.PHONY : src/shell/commands/pwd.s
+
+# target to generate assembly for a file
+src/shell/commands/pwd.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/pwd.c.s
+.PHONY : src/shell/commands/pwd.c.s
 
 src/shell/commands/run_userspace.o: src/shell/commands/run_userspace.c.o
 .PHONY : src/shell/commands/run_userspace.o
@@ -1119,6 +1287,54 @@ src/shell/commands/timer_test.s: src/shell/commands/timer_test.c.s
 src/shell/commands/timer_test.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/timer_test.c.s
 .PHONY : src/shell/commands/timer_test.c.s
+
+src/shell/commands/touch.o: src/shell/commands/touch.c.o
+.PHONY : src/shell/commands/touch.o
+
+# target to build an object file
+src/shell/commands/touch.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/touch.c.o
+.PHONY : src/shell/commands/touch.c.o
+
+src/shell/commands/touch.i: src/shell/commands/touch.c.i
+.PHONY : src/shell/commands/touch.i
+
+# target to preprocess a source file
+src/shell/commands/touch.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/touch.c.i
+.PHONY : src/shell/commands/touch.c.i
+
+src/shell/commands/touch.s: src/shell/commands/touch.c.s
+.PHONY : src/shell/commands/touch.s
+
+# target to generate assembly for a file
+src/shell/commands/touch.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/touch.c.s
+.PHONY : src/shell/commands/touch.c.s
+
+src/shell/commands/write.o: src/shell/commands/write.c.o
+.PHONY : src/shell/commands/write.o
+
+# target to build an object file
+src/shell/commands/write.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/write.c.o
+.PHONY : src/shell/commands/write.c.o
+
+src/shell/commands/write.i: src/shell/commands/write.c.i
+.PHONY : src/shell/commands/write.i
+
+# target to preprocess a source file
+src/shell/commands/write.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/write.c.i
+.PHONY : src/shell/commands/write.c.i
+
+src/shell/commands/write.s: src/shell/commands/write.c.s
+.PHONY : src/shell/commands/write.s
+
+# target to generate assembly for a file
+src/shell/commands/write.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/group_42-kernel.dir/build.make CMakeFiles/group_42-kernel.dir/src/shell/commands/write.c.s
+.PHONY : src/shell/commands/write.c.s
 
 src/shell/shell.o: src/shell/shell.c.o
 .PHONY : src/shell/shell.o
@@ -1242,6 +1458,12 @@ help:
 	@echo "... src/drivers/video/vga_terminal.o"
 	@echo "... src/drivers/video/vga_terminal.i"
 	@echo "... src/drivers/video/vga_terminal.s"
+	@echo "... src/kernel/filesystem/ramfs.o"
+	@echo "... src/kernel/filesystem/ramfs.i"
+	@echo "... src/kernel/filesystem/ramfs.s"
+	@echo "... src/kernel/filesystem/vfs.o"
+	@echo "... src/kernel/filesystem/vfs.i"
+	@echo "... src/kernel/filesystem/vfs.s"
 	@echo "... src/kernel/log.o"
 	@echo "... src/kernel/log.i"
 	@echo "... src/kernel/log.s"
@@ -1290,6 +1512,12 @@ help:
 	@echo "... src/libc/string.o"
 	@echo "... src/libc/string.i"
 	@echo "... src/libc/string.s"
+	@echo "... src/shell/commands/cat.o"
+	@echo "... src/shell/commands/cat.i"
+	@echo "... src/shell/commands/cat.s"
+	@echo "... src/shell/commands/cd.o"
+	@echo "... src/shell/commands/cd.i"
+	@echo "... src/shell/commands/cd.s"
 	@echo "... src/shell/commands/clear.o"
 	@echo "... src/shell/commands/clear.i"
 	@echo "... src/shell/commands/clear.s"
@@ -1305,12 +1533,21 @@ help:
 	@echo "... src/shell/commands/loadkeys.o"
 	@echo "... src/shell/commands/loadkeys.i"
 	@echo "... src/shell/commands/loadkeys.s"
+	@echo "... src/shell/commands/ls.o"
+	@echo "... src/shell/commands/ls.i"
+	@echo "... src/shell/commands/ls.s"
+	@echo "... src/shell/commands/mkdir.o"
+	@echo "... src/shell/commands/mkdir.i"
+	@echo "... src/shell/commands/mkdir.s"
 	@echo "... src/shell/commands/music_player.o"
 	@echo "... src/shell/commands/music_player.i"
 	@echo "... src/shell/commands/music_player.s"
 	@echo "... src/shell/commands/print_memory.o"
 	@echo "... src/shell/commands/print_memory.i"
 	@echo "... src/shell/commands/print_memory.s"
+	@echo "... src/shell/commands/pwd.o"
+	@echo "... src/shell/commands/pwd.i"
+	@echo "... src/shell/commands/pwd.s"
 	@echo "... src/shell/commands/run_userspace.o"
 	@echo "... src/shell/commands/run_userspace.i"
 	@echo "... src/shell/commands/run_userspace.s"
@@ -1323,6 +1560,12 @@ help:
 	@echo "... src/shell/commands/timer_test.o"
 	@echo "... src/shell/commands/timer_test.i"
 	@echo "... src/shell/commands/timer_test.s"
+	@echo "... src/shell/commands/touch.o"
+	@echo "... src/shell/commands/touch.i"
+	@echo "... src/shell/commands/touch.s"
+	@echo "... src/shell/commands/write.o"
+	@echo "... src/shell/commands/write.i"
+	@echo "... src/shell/commands/write.s"
 	@echo "... src/shell/shell.o"
 	@echo "... src/shell/shell.i"
 	@echo "... src/shell/shell.s"

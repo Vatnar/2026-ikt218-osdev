@@ -100,7 +100,6 @@ char scan_to_ascii(uint8_t scan_code, uint8_t mods) {
     return (char)scancodeToAsciiShift[scan_code];
   }
 
-  // TODO: special symbols
   return (char)scancodeToAscii[scan_code];
 }
 

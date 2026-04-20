@@ -20,7 +20,6 @@
 
 void* syscall_table[MAX_SYSCALLS];
 
-// TODO: COnsider what syscalls we need, and which we can omit
 /*
  * Process SYScalls
  */

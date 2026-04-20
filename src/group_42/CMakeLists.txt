@@ -69,6 +69,8 @@ add_executable(group_42-kernel
         src/kernel/util.c
         src/kernel/syscall.c
         src/kernel/util/ring_buffer8.c
+        src/kernel/filesystem/vfs.c
+        src/kernel/filesystem/ramfs.c
 
         src/boot/multiboot2.asm
 

@@ -56,36 +56,6 @@ typedef uint32_t (*syscall_fn_t)(syscall_args_t*);
  */
 void init_syscalls(void);
 
-/* TODO: Remove non-static handler declarations below once
- * userspace exists.
- * Then test_syscalls can be replaced by a userspace binary testing it properly
- */
-// SYSCALL HANDLERS (non-static, can be called directly for testing)
-
-uint32_t sys_exit(syscall_args_t*);
-uint32_t sys_fork(syscall_args_t*);
-uint32_t sys_wait(syscall_args_t*);
-uint32_t sys_execve(syscall_args_t*);
-uint32_t sys_getpid(syscall_args_t*);
-
-uint32_t sys_read(syscall_args_t*);
-uint32_t sys_write(syscall_args_t*);
-uint32_t sys_open(syscall_args_t*);
-uint32_t sys_close(syscall_args_t*);
-uint32_t sys_lseek(syscall_args_t*);
-uint32_t sys_dup(syscall_args_t*);
-uint32_t sys_dup2(syscall_args_t*);
-
-uint32_t sys_brk(syscall_args_t*);
-
-uint32_t sys_getcwd(syscall_args_t*);
-uint32_t sys_chdir(syscall_args_t*);
-
-uint32_t sys_getuid(syscall_args_t*);
-uint32_t sys_getgid(syscall_args_t*);
-
-uint32_t sys_pipe(syscall_args_t*);
-
 /**
  *  extract arguments from CPU registers into a
  * syscall_args_t struct, look up the handler, and store the

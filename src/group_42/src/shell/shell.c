@@ -35,7 +35,8 @@ extern int cmd_write(int argc, char** argv);
 
 #define SHELL_BUFFER_SIZE 256
 #define HISTORY_SIZE 10
-#define PROMPT_STR "> "
+
+static char prompt_str[64] = "> ";
 
 static char cmd_buffer[SHELL_BUFFER_SIZE];
 static size_t buf_cursor = 0;
@@ -74,6 +75,33 @@ const shell_command_t command_table[] = {
     {"run_userspace",        "Run a userspace program",         run_userspace_handler}
 };
 const size_t NUM_COMMANDS = sizeof(command_table) / sizeof(command_table[0]);
+
+static char cwd[MAX_PATH_LEN] = "/";
+
+const char* shell_get_cwd(void) {
+  return cwd;
+}
+
+void shell_set_cwd(const char* new_path) {
+  if (!new_path) return;
+  strncpy(cwd, new_path, MAX_PATH_LEN);
+}
+
+void shell_build_absolute_path(char* out, const char* input) {
+  if (input[0] == '/') {
+    strncpy(out, input, MAX_PATH_LEN);
+  } else {
+    const char* current_cwd = shell_get_cwd();
+    strncpy(out, current_cwd, MAX_PATH_LEN);
+
+    if (strcmp(current_cwd, "/") != 0) {
+      strncat(out, "/", MAX_PATH_LEN);
+    }
+
+    strncat(out, input, MAX_PATH_LEN);
+  }
+}
+
 
 static void buffer_clear(void) {
   for (size_t i = 0; i < SHELL_BUFFER_SIZE; i++) {
@@ -198,13 +226,21 @@ static void clear_line(size_t start_y) {
 }
 
 static void render_line(void) {
+  const char* cwd = shell_get_cwd();
+  strncpy(prompt_str, cwd, 60);
+  strncat(prompt_str, " $ ", 4);
+  prompt_len = 0;
+  for (int i = 0; prompt_str[i] != '\0'; i++) {
+    prompt_len++;
+  }
+
   vga_text_get_cursor_position(&cursor_x, &cursor_y);
   size_t line_start_y = cursor_y;
 
   clear_line(line_start_y);
 
-  for (size_t i = 0; PROMPT_STR[i] != '\0'; i++) {
-    vga_text_putentryat(PROMPT_STR[i], terminal_color, i, line_start_y);
+  for (size_t i = 0; prompt_str[i] != '\0'; i++) {
+    vga_text_putentryat(prompt_str[i], terminal_color, i, line_start_y);
   }
 
   for (size_t i = 0; i < buf_len; i++) {

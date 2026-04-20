@@ -56,6 +56,3 @@ void* memset16(void* ptr, uint16_t value, size_t num);
  * Print the current status of memory usage
  */
 void print_memory_layout();
-
-
-// TODO: make arena allocators

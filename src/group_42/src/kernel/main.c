@@ -14,12 +14,12 @@
 #include "arch/i386/cpu/idt.h"
 #include "drivers/input/keyboard.h"
 #include "drivers/video/vga_text.h"
-#include "kernel/log.h"
-#include "kernel/syscall.h"
-#include "kernel/util.h"
-#include "kernel/user_mode.h"
 #include "kernel/filesystem/ramfs.h"
 #include "kernel/filesystem/vfs.h"
+#include "kernel/log.h"
+#include "kernel/syscall.h"
+#include "kernel/user_mode.h"
+#include "kernel/util.h"
 #include "shell/shell.h"
 
 extern const uint8_t shell_elf[];
@@ -47,8 +47,10 @@ int k_init(uint32_t magic, struct multiboot_info* addr) {
 
 char* strcat(char* dest, const char* src) {
   char* ptr = dest;
-  while (*ptr) ptr++;         // Find the end of dest
-  while ((*ptr++ = *src++));  // Copy src including null terminator
+  while (*ptr)
+    ptr++; // Find the end of dest
+  while ((*ptr++ = *src++))
+    ; // Copy src including null terminator
   return dest;
 }
 
@@ -61,12 +63,14 @@ void vfs_debug_tree(const char* path, int level) {
   }
 
   int fd = vfs_open(path, O_READ);
-  if (fd == VFS_INVALID_FD) return;
+  if (fd == VFS_INVALID_FD)
+    return;
 
   vfs_dirent_t entry;
   while (vfs_read(fd, &entry, 1) > 0) {
     // 1. Indentation
-    for (int i = 0; i <= level; i++) printf("  ");
+    for (int i = 0; i <= level; i++)
+      printf("  ");
 
     if (entry.type == VFS_DIRECTORY) {
       // 2. Print Directory with leading slash
@@ -165,10 +169,8 @@ void run_vfs_test_suite() {
     // Loop until vfs_read returns 0 (EOF)
     // We pass &entry as the 'void* buf' and 1 as 'n' (1 entry)
     while (vfs_read(fd, &entry, 1) > 0) {
-      log_info("  - Found: %s (Type: %s, Inode: %x)\n",
-               entry.name,
-               (entry.type == VFS_DIRECTORY ? "DIR" : "FILE"),
-               entry.inode_num);
+      log_info("  - Found: %s (Type: %s, Inode: %x)\n", entry.name,
+               (entry.type == VFS_DIRECTORY ? "DIR" : "FILE"), entry.inode_num);
       count++;
     }
 
@@ -218,11 +220,9 @@ void kernel_main(uint32_t magic, void* addr) {
   uint32_t* test = (uint32_t*)0x10000;
   *test = 42;
   printf("Write to 0x10000 succeeded: %d\n", *test);
-  log_set_min_level(3);
+  // Start vfsi
   vfs_init();
   ramfs_init("/");
-  run_vfs_test_suite();
-  vfs_debug_tree("/", 0);
 
   log_info("Starting shell...\n");
 

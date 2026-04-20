@@ -14,7 +14,8 @@ int cmd_test_malloc(int argc, char** argv) {
     uint32_t free_before = pmm_get_free_count();
     printf("Before allocation:\n");
     printf("  Free frames: %d\n", free_before);
-    printf("  Memory used: %d bytes\n\n", memory_info.memory_used);
+    printf("  Initial memory used: %d bytes\n\n", memory_info.memory_used);
+    uint32_t mem_start = memory_info.memory_used;
 
     printf("Allocating 100 bytes...\n");
     char* ptr1 = malloc(100);
@@ -73,10 +74,10 @@ int cmd_test_malloc(int argc, char** argv) {
         pass = 0;
     }
 
-    if (memory_info.memory_used == 0) {
-        printf("  [PASS] Memory used is 0 after all frees\n");
+    if (memory_info.memory_used == mem_start) {
+        printf("  [PASS] Memory used restored to initial value (%d)\n", mem_start);
     } else {
-        printf("  [FAIL] Expected 0 bytes used, got %d\n", memory_info.memory_used);
+        printf("  [FAIL] Expected %d bytes, got %d\n", mem_start, memory_info.memory_used);
         pass = 0;
     }
 

@@ -7,7 +7,6 @@
 
 
 // K&R
-// TODO: implement ITO libc instead
 /**
  * Convert a number to its ascii representation
  * @param n integer number
